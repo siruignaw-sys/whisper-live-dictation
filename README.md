@@ -1,4 +1,4 @@
-### whisper-live-dictation
+### **whisper-live-dictation**
 Live, pause-to-commit dictation using local Whisper transcription. Talk continuously, and the tool will detect natural pauses, transcribing each sentence in the background, and printing it, without waiting for the whole session to end. 
 
 Built to use Whisper `large-v3` for high accuracy (including mixed Chinese/English speech and technicaly vocabulary), while still feeling responsive, by transcribing sentence-by-sentence instead of all at once. 
