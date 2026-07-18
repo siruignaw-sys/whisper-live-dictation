@@ -3,10 +3,13 @@ import sys
 import nvidia.cublas
 import nvidia.cudnn
 
+
 venv_root = os.path.dirname(os.path.dirname(sys.executable))
 nvidia_path = os.path.join(venv_root, "Lib", "site-packages", "nvidia")
-os.add_dll_directory(os.path.join(nvidia_path, "cublas", "bin"))
-os.add_dll_directory(os.path.join(nvidia_path, "cudnn", "bin"))
+
+if sys.platform == "win32":
+    os.add_dll_directory(os.path.join(nvidia_path, "cublas", "bin"))
+    os.add_dll_directory(os.path.join(nvidia_path, "cudnn", "bin"))
 
 import sounddevice as sd
 import numpy as np
