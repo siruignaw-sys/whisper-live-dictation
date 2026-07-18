@@ -4,11 +4,11 @@ Live, pause-to-commit dictation using local Whisper transcription. Talk continuo
 Built to use Whisper `large-v3` for high accuracy (including mixed Chinese/English speech and technicaly vocabulary), while still feeling responsive, by transcribing sentence-by-sentence instead of all at once. 
 
 ## How it works
- - Captures audio continuously from the microphone
- - Runs Silero VAD to detect speech vs. silence in real time
- - A segmenter watches for ~700ms of silence to mark the end of a sentence (with a small buffer so the start of speech isn't clipped)
- - Completed segments are queued and transcribed in the background by `faster-whisper` (Whisper `large-v3`, GPU-accelerated)
- - Transcribed text is printed as each segment completes
+ 1. Captures audio continuously from the microphone
+ 2. Runs Silero VAD to detect speech vs. silence in real time
+ 3. A segmenter watches for ~700ms of silence to mark the end of a sentence (with a small buffer so the start of speech isn't clipped)
+ 4. Completed segments are queued and transcribed in the background by `faster-whisper` (Whisper `large-v3`, GPU-accelerated)
+ 5. Transcribed text is printed as each segment completes
 
  ## Reguirements
  * Python 3.10+
