@@ -79,6 +79,13 @@ def consumer():
                     # write("scratch/segment_" + str(test_num) + ".wav", fs, segment_data)
                     segment_buffer = []
                     test_num+=1
+    if len(segment_buffer) != 0:
+        segment_data = np.concatenate(tuple(segment_buffer)).flatten()
+        transcription_queue.put((seq_id, segment_data))
+        seq_id += 1
+        # write("scratch/segment_" + str(test_num) + ".wav", fs, segment_data)
+        segment_buffer = []
+        test_num+=1
 
 def transcription_worker():
     print("loading model")

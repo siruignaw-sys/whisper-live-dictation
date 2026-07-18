@@ -38,7 +38,6 @@ Built to use Whisper `large-v3` for high accuracy (including mixed Chinese/Engli
  Talk normally, pause between sentences; each sentence should print shortly after you finish saying it. Press `Ctrl+C` to stop.
 
  ## Known limitations (current state)
- * **The last unfinished segment can be lost on `Ctrl+C`.** If you stop mid-sentence (before a full pause), that last bit of audio isn't flushed/transcribed yet. This is a known gap, not intended final behavior.
  * **Occasional language mix-ups.** Very rarely, a segment may transcribe in the wrong language even with the language explicity set. Uncommon, not yet understood.
  * **Output is console-only right now.** No GUI/live text window yet, text just prints to the terminal.
  * **Punctuation and fluency are noticeably better in English than Chinese.** This is a general Whisper model limitation, not specific to this tool.
