@@ -89,7 +89,7 @@ def transcription_worker():
         sequence_id, audio = item[0], item[1]
         print(f"dtype: {audio.dtype}, shape: {audio.shape}, min: {audio.min()}, max: {audio.max()}")
 
-        segments, info = model.transcribe(audio, language="en")
+        segments, info = model.transcribe(audio, task = "transcribe")
         print("done transcription")
         for seg in segments:
             print(seg.text)
