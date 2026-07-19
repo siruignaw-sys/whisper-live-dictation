@@ -11,7 +11,7 @@ Built to use Whisper `large-v3` for high accuracy (including mixed Chinese/Engli
  5. Transcribed text is printed as each segment completes
 
  ## Reguirements
- * Python 3.10+
+ * Python 3.12+
  * NVIDIA GPU with CUDA support: `large-v3` needs a real GPU to run at usable speed; 8GB+ VRAM reccomended
  * A working microphone
 
