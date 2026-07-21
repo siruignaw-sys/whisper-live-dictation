@@ -39,7 +39,7 @@ Built to use Whisper `large-v3` for high accuracy (including mixed Chinese/Engli
 
  ## Known limitations (current state)
  * **Occasional language mix-ups.** Very rarely, a segment may transcribe in the wrong language even with the language explicity set. Uncommon, not yet understood.
- * **Output is console-only right now.** No GUI/live text window yet, text just prints to the terminal.
+ * **Output is only to the focused window.** If it types into the wrong window or text field, or no field is focused, there will be no way to recover the text.
  * **Punctuation and fluency are noticeably better in English than Chinese.** This is a general Whisper model limitation, not specific to this tool.
  * **Technical/uncommon terms can occasionally be mis-transcribed** as a phonetically similar but wrong word (e.g. "site-directed" -> "cytodirected"). Worth double-checking output on unfamiliar or high technical vocabulary. 
 
