@@ -1,11 +1,15 @@
 import os
 import sys
-import nvidia.cublas
-import nvidia.cudnn
 
-
-venv_root = os.path.dirname(os.path.dirname(sys.executable))
-nvidia_path = os.path.join(venv_root, "Lib", "site-packages", "nvidia")
+if getattr(sys, 'frozen', False):
+    nvidia_path = os.path.join(sys._MEIPASS, "nvidia")
+    print(f"MEIPASS: {sys._MEIPASS}")
+    print(f"Looking for cublas at: {os.path.join(nvidia_path, 'cublas', 'bin')}")
+    print(f"Exists: {os.path.exists(os.path.join(nvidia_path, 'cublas', 'bin'))}")
+    print(os.listdir(os.path.join(nvidia_path, "cublas", "bin")))
+else:
+    venv_root = os.path.dirname(os.path.dirname(sys.executable))
+    nvidia_path = os.path.join(venv_root, "Lib", "site-packages", "nvidia")
 
 if sys.platform == "win32":
     os.add_dll_directory(os.path.join(nvidia_path, "cublas", "bin"))
@@ -19,6 +23,15 @@ import threading
 import torch
 import collections
 from faster_whisper import WhisperModel
+import pyautogui
+
+if sys.platform == "linux" or sys.platform == "linux2":
+    session_type = os.environ.get("XDG_SESSION_TYPE", "")
+    if session_type == "wayland":
+        print("Error: Wayland detected. Auto-typing isn't supported on Wayland yet.")
+        print("This tool requires X11 on linux.")
+        sys.exit(1)
+
 
 model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad', 
                               model='silero_vad', 
@@ -32,6 +45,9 @@ fs = 16000
 audio_queue = queue.Queue(maxsize=50)
 transcription_queue = queue.Queue(maxsize=50)
 buffer = []
+
+def type_text(text):
+    pyautogui.write(text + " ")
 
 def callback(indata, frames, time, status):
     if status:
@@ -93,18 +109,15 @@ def transcription_worker():
     model = WhisperModel("large-v3", device="cuda", compute_type="int8_float16")
     print("done loading model")
     while True:
-        print("got item")
         item = transcription_queue.get()
         if item is None:
             break
         sequence_id, audio = item[0], item[1]
-        print(f"dtype: {audio.dtype}, shape: {audio.shape}, min: {audio.min()}, max: {audio.max()}")
-
         segments, info = model.transcribe(audio, task = "transcribe")
-        print("done transcription")
         for seg in segments:
-            print(seg.text)
-        print("done printing")
+            if not seg.text.strip():
+                continue
+            type_text(seg.text.strip())
 consumer_thread = threading.Thread(target=consumer)
 consumer_thread.start()
 
